@@ -2,20 +2,16 @@ const { User } = require('../models');
 const { comparePsw } = require('../helper/bcrypt');
 const { generateToken } = require('../helper/jwt');
 class UserController {
-    static async getUser (req, res, next) {
-        res.send('Get User Page!')
-        console.log("get user controller")
-    }
-
     static register(req, res, next) {
         let UserData = {
             email : req.body.email,
             username : req.body.username,
-            password : req.body.password
+            password : req.body.password,
+            role : req.body.role
         }
         User.create(UserData)
         .then((data) => {
-            res.status(201).json({ id : data.id, email : data.email, username: data.email })
+            res.status(201).json({ id : data.id, email : data.email, username: data.email, role: data.role })
         })
         .catch(err => {
             next(err);
